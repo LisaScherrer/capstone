@@ -48,4 +48,3 @@ title <- "Interview"
 
 # Fetch up to 100 articles
 articles <- fetch_news_articles(api_id, api_key, title, "en", published_at_start, published_at_end, 100)
-
