@@ -1,4 +1,7 @@
+#load packages
 library(ggplot2)
+library(dplyr)
+
 # Load the data ----
 load("data/df_journal.Rda")
 
@@ -13,14 +16,6 @@ hist(df_journalarticles$is.referenced.by.count, breaks=50, main="Histogram of Re
      xlab="Number of References", ylab="Frequency", col="lightblue")
 dev.off()
 
-## logarithmirtes histogramm
-png("hist_ref_log.png", width=800, height=600)
-par(mar=c(4, 4, 2, 2))
-#hist(df_journal$is.referenced.by.count, log="y", breaks=50, main="Histogram of Log-Transformed Reference Counts",
-#     xlab="Log(Number of References)", ylab="Frequency", col="lightblue")
-
-ggplot(df_journal, aes(x = is.referenced.by.count)) + geom_histogram() + scale_y_log10()
-dev.off()
 # Filter the dataframe to include only rows where reference counts are 250 or less
 filtered_data <- df_journal[df_journal$is.referenced.by.count <= 250, ]
 
@@ -56,9 +51,6 @@ ggplot(df_na_lang_rem, aes(x=language, y=is.referenced.by.count, fill=language))
 dev.off()
 
 # stacked bar plot showing distribution of langugages over time
-# Load necessary libraries
-library(dplyr)
-library(ggplot2)
 
 # Assuming you have a 'year' and 'language' column in your df_na_lang_rem
 # Filter data for the last ten years
