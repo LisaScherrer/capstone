@@ -1,17 +1,47 @@
 ---
-title: "report"
+title: "Report"
 output: html_document
 date: "2024-05-13"
 ---
+
 # University of Lucerne Journal Article Analysis
 
-## Introduction
+------------------------------------------------------------------------
+
+::: {style="text-align: center;"}
+::: {style="text-align: center;"}
+*`Lisa Florentina Scherrer`*
+
+Data Mining For Political and Social Science in R
+
+![](images/clipboard-978820727.png){width="189"}
+:::
+:::
+
+## 1 Introduction
+
 For my capstone project I wanted to make a data analysis of the journal articles of the University of Lucerne.
 
-## Data
+## 2 Retrieving Crossref Data
+
 To access the data I made a Get request, however it is only possible to request 1000 articles per request made. Additionally I was not able to access more than 10000 articles in total. That is why I made 10 requests to get all the data I needed which I joined together as "df_journal".
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Analysis
+## 3 Joining the Requests Together
+
+## 4 Analysis and Visualisation
+
+![](images/scatter_ref_year.png)
+
+![](images/hist_ref250.png)
+
+![](images/hist_ref.png)
+
+![](images/hist_publisher.png)
+
+![](images/ref_lang_time-01.png)
+
+## 5 Conclusion
