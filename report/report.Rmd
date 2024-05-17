@@ -4,7 +4,7 @@ output: html_document
 date: "2024-05-13"
 ---
 
-# University of Lucerne Journal Article Analysis
+# What Makes a Successful Journal Article?
 
 ------------------------------------------------------------------------
 
@@ -20,7 +20,9 @@ Data Mining For Political and Social Science in R
 
 ## 1 Introduction
 
-For my capstone project I wanted to make a data analysis of the journal articles of the University of Lucerne. I was interested in the following questions: - How many references do the articles have? - What role does the language of the articles play in the amount of references? - Which are the most common publishers? -
+For my capstone project I wanted to make a data analysis of the journal articles. I am focusing on the journal articles that are by authors, that are affiliated with the University of Lucerne in order to answer my research question on the connection between different meta data and the amount of citations of these journal articles and ultimately to answer what makes a successful paper.
+
+For this purpose I retrieved the meta data of the specified journal articles through a REST API which is described in more detail in the following chapter *2 Retrieving Crossref Data.* An additional step was to join the separate data sets into one as explained in chapter *3 Joining the Data*. Next the raw data was transformed and displayed through a list of the top 10 most published articles as well as number of visualisations, including a stacked plot and a scatter plot, connecting the meta data variables and the amount of citations. Through these an analysis was made to understand the links between the independent variables language, year of creation and the dependent variable reference count. These two steps are detailed in chapter *4 Visualisation and Analysis*. Finally, in chapter *5 Conclusion* the findings and limitations of this research project are summarised.
 
 ## 2 Retrieving Crossref Data
 
@@ -30,9 +32,19 @@ To access the data I made a Get request, however it is only possible to request 
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## 3 Joining the Requests Together
+## 3 Joining the Data
 
 ## 4 Analysis and Visualisation
+
+I was interested in the following questions:
+
+-   How many references do the journal articles have?
+
+-   What role does the language of the articles play in the amount of references?
+
+-   Which are the most common publishers?
+
+-   What is the connection between time and reference count?
 
 ![](images/scatter_ref_year.png)
 
