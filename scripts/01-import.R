@@ -1,10 +1,11 @@
-# Load Libraries -----------------
+# Load Packages -----------------
 library(httr)
 library(jsonlite)
 library(dplyr)
 
 # Retrieving Crossref Data ------------
-## Creating an empty storage list-----------
+
+## Creating an Empty List -----------
 requests1 <- list()
 
 ## For Loop Data Request -------------

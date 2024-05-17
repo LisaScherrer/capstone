@@ -49,6 +49,10 @@ for(x in 0:276) {
 ## 3 Joining the Data
 
 to get all the data I needed which I joined together as "df_journal".
+```{r, eval=FALSE}
+
+```
+
 
 ## 4 Analysis and Visualisation
 

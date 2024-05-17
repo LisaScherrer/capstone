@@ -1,29 +1,29 @@
-#load packages
+# Load Packages ---------
 library(ggplot2)
 library(dplyr)
 
-# Load the data ----
+# Load Data ----
 load("data/df_journal.Rda")
 
 # Analysis -----
-## Which papers have the most references ---
+
+## Reference Count -----
 df_journal$is.referenced.by.count[order(df_journal$is.referenced.by.count, decreasing = TRUE)]
 
-## How many times are articles referenced ---
-# Top 10 most referenced articles
+### Top 10 Most Referenced Articles ------
 
-# Distribution of reference counts
+### Distribution of reference counts --------
 png("hist_ref.png", width=800, height=600)
 par(mar=c(4, 4, 2, 2))
 hist(df_journalarticles$is.referenced.by.count, breaks=50, main="Histogram of Reference Counts",
      xlab="Number of References", ylab="Frequency", col="lightblue")
 dev.off()
-# 
 
-# Filter the dataframe to include only rows where reference counts are 250 or less
+#### Filter Data Frame ------
+#rows where reference counts are 250 or less
 filtered_data <- df_journal[df_journal$is.referenced.by.count <= 250, ]
 
-# Create a histogram for the filtered data
+#### Histogramm ----
 png("hist_ref250.png", width=800, height=600)
 par(mar=c(4, 4, 2, 2))
 hist(filtered_data$is.referenced.by.count, breaks=50, main="Histogram of Reference Counts (250 or less)",

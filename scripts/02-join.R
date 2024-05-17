@@ -1,9 +1,10 @@
-#load libraries
+# Load Packages ---------
 library(dplyr)
-#load data
+
+# Load Data --------------
 load("crossref.Rda")
 
-#join different data frames together
+# Join Data Frames -------------
 df_journal <- data.frame()
 for(x in 1:length(requests1)){
 data <- fromJSON(requests1[[x]], flatten = TRUE)
@@ -11,5 +12,5 @@ df1 <- data.frame(data$message$items)
 df_journal <- bind_rows(df_journal, df1)
 }
 
-#save joined data frame
+#Save Joined Data Frame --------------
 save(df_journal, file = "df_journal.Rda")
