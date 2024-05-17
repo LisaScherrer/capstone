@@ -10,11 +10,15 @@ load("data/df_journal.Rda")
 df_journal$is.referenced.by.count[order(df_journal$is.referenced.by.count, decreasing = TRUE)]
 
 ## How many times are articles referenced ---
+# Top 10 most referenced articles
+
+# Distribution of reference counts
 png("hist_ref.png", width=800, height=600)
 par(mar=c(4, 4, 2, 2))
 hist(df_journalarticles$is.referenced.by.count, breaks=50, main="Histogram of Reference Counts",
      xlab="Number of References", ylab="Frequency", col="lightblue")
 dev.off()
+# 
 
 # Filter the dataframe to include only rows where reference counts are 250 or less
 filtered_data <- df_journal[df_journal$is.referenced.by.count <= 250, ]

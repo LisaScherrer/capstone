@@ -20,7 +20,7 @@ Data Mining For Political and Social Science in R
 
 ## 1 Introduction
 
-For my capstone project I wanted to make a data analysis of the journal articles of the University of Lucerne.
+For my capstone project I wanted to make a data analysis of the journal articles of the University of Lucerne. I was interested in the following questions: - How many references do the articles have? - What role does the language of the articles play in the amount of references? - Which are the most common publishers? -
 
 ## 2 Retrieving Crossref Data
 
