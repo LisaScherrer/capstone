@@ -34,7 +34,7 @@ Additionally, the data should be saved immediately after every request. In the c
 
 ## 3 Joining the Data
 
-to get all the data I needed which I joined together as "df_journal".
+Since the data had to be requested multiple times these seperate responses were joined into one file. For this purpose a Loop was created to merge these data frames together as df_journal. The data was saved in a .Rda file format again because of the complexity of the data.
 
 ## 4 Analysis and Visualisation
 
