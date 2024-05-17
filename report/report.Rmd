@@ -32,27 +32,9 @@ In order to automate the process of making several requests a loop was created. 
 
 Additionally, the data should be saved immediately after every request. In the case of this data set it was not possible to use *write.csv()* since the information was not two dimensional. The author column for instance contained further lists detailing the different authors and further the institutions they were affiliated with. That is why the data was saved with *save()* to create a file in .Rda format.
 
-```{r, eval=FALSE}
-for(x in 0:276) {
-  req = GET(paste(sep="","https://api.crossref.org/works?query.affiliation=universit%C3%A4t+luzern&filter=type:journal-article&rows=1000&offset=", x*1000)) 
-  #only 1000 records per request
-  v <- rawToChar(req$content)
-  print(paste("added request with offset:", x))
-  print(paste(" len=",nchar(v)))
- if (nchar(v) < 10000) break;
-    
- requests1[length(requests1)+1]=v
-  save(requests1, file = "crossref.Rda") #save the data after every request
-}
-```
-
 ## 3 Joining the Data
 
 to get all the data I needed which I joined together as "df_journal".
-```{r, eval=FALSE}
-
-```
-
 
 ## 4 Analysis and Visualisation
 
