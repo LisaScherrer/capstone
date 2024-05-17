@@ -12,6 +12,16 @@ df_journal$is.referenced.by.count[order(df_journal$is.referenced.by.count, decre
 
 ### Top 10 Most Referenced Articles ------
 
+# Dataframe has columns named 'title', 'is.referenced.by.count', and 'author'
+top_papers <- df_journal %>%
+  arrange(desc(is.referenced.by.count)) %>%
+  slice_head(n = 10) %>%
+  select(title, is.referenced.by.count, author)  # Adjust these column names if needed
+
+# If 'author' is a list, and you want to convert it to a comma-separated string
+top_papers$author <- sapply(top_papers$author, function(x) paste(x, collapse = ", "))
+
+print(top_papers)
 ### Distribution of reference counts --------
 png("hist_ref.png", width=800, height=600)
 par(mar=c(4, 4, 2, 2))
@@ -75,7 +85,6 @@ dev.off()
 
 ### publishers
 # Summarize data to count the number of papers per publisher
-# Summarize data to count the number of papers per publisher
 publisher_summary <- df_journal %>%
   group_by(publisher) %>%
   summarise(paper_count = n(), .groups = 'drop') %>%
@@ -105,23 +114,3 @@ ggplot(publisher_summary, aes(x = publisher, y = paper_count, fill = publisher))
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))  # Rotate the x-axis labels for better readability
 dev.off()
-
-### Top 10 cited papers
-
-# Assuming your dataframe has columns named 'title', 'is.referenced.by.count', and 'author'
-top_papers <- df_journal %>%
-  arrange(desc(is.referenced.by.count)) %>%
-  slice_head(n = 10) %>%
-  select(title, is.referenced.by.count, author)  # Adjust these column names if needed
-
-# If 'author' is a list, and you want to convert it to a comma-separated string
-top_papers$author <- sapply(top_papers$author, function(x) paste(x, collapse = ", "))
-
-# Install and load the writexl library if not already installed
-if (!requireNamespace("writexl", quietly = TRUE)) {
-  install.packages("writexl")
-}
-library(writexl)
-
-# Export the data to an Excel file
-write_xlsx(top_papers, "Top_Ten_Cited_Papers.xlsx")

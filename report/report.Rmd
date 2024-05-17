@@ -38,6 +38,12 @@ to get all the data I needed which I joined together as "df_journal".
 
 ## 4 Analysis and Visualisation
 
+```{r}
+print(top_papers)
+View(top_papers)
+```
+
+
 I was interested in the following questions:
 
 -   How many references do the journal articles have?
