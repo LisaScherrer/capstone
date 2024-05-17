@@ -24,15 +24,31 @@ For my capstone project I wanted to make a data analysis of the journal articles
 
 For this purpose I retrieved the meta data of the specified journal articles through a REST API which is described in more detail in the following chapter *2 Retrieving Crossref Data.* An additional step was to join the separate data sets into one as explained in chapter *3 Joining the Data*. Next the raw data was transformed and displayed through a list of the top 10 most published articles as well as number of visualisations, including a stacked plot and a scatter plot, connecting the meta data variables and the amount of citations. Through these an analysis was made to understand the links between the independent variables language, year of creation and the dependent variable reference count. These two steps are detailed in chapter *4 Visualisation and Analysis*. Finally, in chapter *5 Conclusion* the findings and limitations of this research project are summarised.
 
-## 2 Retrieving Crossref Data
+## 2 Retrieving Journal Article Data
 
-To access the data I made a Get request, however it is only possible to request 1000 articles per request made. Additionally I was not able to access more than 10000 articles in total. That is why I made 10 requests to get all the data I needed which I joined together as "df_journal".
+To access data related to journal articles the REST API by Crossref was used. To establish the connection a GET request was made. In the case of this API it is only possible to request 1000 journal articles per request made.
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+In order to automate the process of making several requests a loop was created. However, it was not possible to access more than 10000 articles in total. This was only discovered later when looking at the contents of the data and found the last request information to be empty. To avoid the for loop running until the total of 276 000 journal article data was retrieved an if condition was implemented. When the infomation contains less then 10 000 characters the loop stops and the following empty information is not requested.
+
+Additionally, the data should be saved immediately after every request. In the case of this data set it was not possible to use *write.csv()* since the information was not two dimensional. The author column for instance contained further lists detailing the different authors and further the institutions they were affiliated with. That is why the data was saved with *save()* to create a file in .Rda format.
+
+```{r, eval=FALSE}
+for(x in 0:276) {
+  req = GET(paste(sep="","https://api.crossref.org/works?query.affiliation=universit%C3%A4t+luzern&filter=type:journal-article&rows=1000&offset=", x*1000)) 
+  #only 1000 records per request
+  v <- rawToChar(req$content)
+  print(paste("added request with offset:", x))
+  print(paste(" len=",nchar(v)))
+ if (nchar(v) < 10000) break;
+    
+ requests1[length(requests1)+1]=v
+  save(requests1, file = "crossref.Rda") #save the data after every request
+}
 ```
 
 ## 3 Joining the Data
+
+to get all the data I needed which I joined together as "df_journal".
 
 ## 4 Analysis and Visualisation
 
