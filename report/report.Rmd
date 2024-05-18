@@ -20,48 +20,53 @@ Data Mining For Political and Social Science in R
 
 ## 1 Introduction
 
-For my capstone project I wanted to make a data analysis of the journal articles. I am focusing on the journal articles that are by authors, that are affiliated with the University of Lucerne in order to answer my research question on the connection between different meta data and the amount of citations of these journal articles and ultimately to answer what makes a successful paper.
+The of this project are journal articles that are by authors affiliated with the University of Lucerne. In order to answer my research question on the connection between different meta data and the amount of citations of these journal articles and ultimately to answer what makes a successful paper.
 
-For this purpose I retrieved the meta data of the specified journal articles through a REST API which is described in more detail in the following chapter *2 Retrieving Crossref Data.* An additional step was to join the separate data sets into one as explained in chapter *3 Joining the Data*. Next the raw data was transformed and displayed through a list of the top 10 most published articles as well as number of visualisations, including a stacked plot and a scatter plot, connecting the meta data variables and the amount of citations. Through these an analysis was made to understand the links between the independent variables language, year of creation and the dependent variable reference count. These two steps are detailed in chapter *4 Visualisation and Analysis*. Finally, in chapter *5 Conclusion* the findings and limitations of this research project are summarised.
+In the following chapter *2 Hypothesis* the assumptions about this purpose I retrieved the meta data of the specified journal articles through a REST API which is described in more detail in chapter *3 Retrieving Data.* Next the raw data was transformed and displayed through a list of the top 10 most published articles as well as number of visualisations, including a stacked plot and a scatter plot, connecting the meta data variables and the amount of citations. These two steps are detailed in chapter *4 Visualisation and Analysis*. Finally, in chapter *5 Conclusion* the findings and limitations of this research project are summarised.
 
-## 2 Retrieving Journal Article Data
+## 2 Hypotheses
+
+The parameter for a successful article and dependent variable is the amount of references. The university is a young institution not having published studies with "cult status", the first Hypothesis (H1) is that there are very few highly cited articles. However, these articles can gain acclaim through discussing current topics, therefore recent publications are more popular (H2). The language of the article also plays a role due to the increasing importance of English, that is why there are more English publications (H3). Lastly, articles that are of an interdisciplinary nature are relevant to more research fields and yield better results and regardless of the few study programms offered the publishers are diverse (H4).
+
+## 3 Retrieving Data
+
+### 3.1 GET Request
 
 To access data related to journal articles the REST API by Crossref was used. To establish the connection a GET request was made. In the case of this API it is only possible to request 1000 journal articles per request made.
 
 In order to automate the process of making several requests a loop was created. However, it was not possible to access more than 10000 articles in total. This was only discovered later when looking at the contents of the data and found the last request information to be empty. To avoid the for loop running until the total of 276 000 journal article data was retrieved an if condition was implemented. When the infomation contains less then 10 000 characters the loop stops and the following empty information is not requested.
 
-Additionally, the data should be saved immediately after every request. In the case of this data set it was not possible to use *write.csv()* since the information was not two dimensional. The author column for instance contained further lists detailing the different authors and further the institutions they were affiliated with. That is why the data was saved with *save()* to create a file in .Rda format.
+### 3.2 Saving and Transforming
 
-## 3 Joining the Data
+Additionally, the data should be saved immediately after every request. In the case of this data set it was not possible to use *write.csv()* since the information was not two dimensional. The author column for instance contained further lists detailing the different authors and further the institutions they were affiliated with. That is why the data was saved with *save()* to create a file in .Rda format.
 
 Since the data had to be requested multiple times these seperate responses were joined into one file. For this purpose a Loop was created to merge these data frames together as df_journal. The data was saved in a .Rda file format again because of the complexity of the data.
 
 ## 4 Analysis and Visualisation
 
-```{r}
-print(top_papers)
-View(top_papers)
-```
-
-
-I was interested in the following questions:
-
 -   How many references do the journal articles have?
-
--   What role does the language of the articles play in the amount of references?
-
--   Which are the most common publishers?
-
--   What is the connection between time and reference count?
-
-![](images/scatter_ref_year.png)
 
 ![](images/hist_ref250.png)
 
 ![](images/hist_ref.png)
 
+-   What is the connection between time and reference count?
+
+![](images/scatter_ref_year.png)
+
+-   What role does the language of the articles play in the amount of references?
+
+    ![](images/ref_lang_time-01.png)
+
+    -   Which are the most common publishers?
+
 ![](images/hist_publisher.png)
 
-![](images/ref_lang_time-01.png)
+To round off the analysis the top ten articles should be compared to these findings to see if they are in line with the observed trends.
+
+```{r}
+print(top_papers)
+View(top_papers)
+```
 
 ## 5 Conclusion
