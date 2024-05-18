@@ -44,11 +44,15 @@ Since the data had to be requested multiple times these seperate responses were 
 
 ## 4 Analysis and Visualisation
 
--   How many references do the journal articles have?
+### 4.1 Reference Count
 
-![](images/hist_ref250.png)
+*Figure 1* and *Figure 2* represents the distribution of
+
+![Figure 1](images/hist_ref250.png)
 
 ![](images/hist_ref.png)
+
+### 4.2 Time and 
 
 -   What is the connection between time and reference count?
 

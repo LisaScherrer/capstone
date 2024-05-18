@@ -10,25 +10,6 @@ load("data/df_journal.Rda")
 ## Reference Count -----
 df_journal$is.referenced.by.count[order(df_journal$is.referenced.by.count, decreasing = TRUE)]
 
-### Top 10 Most Referenced Articles ------
-
-# Dataframe has columns named 'title', 'is.referenced.by.count', and 'author'
-top_papers <- df_journal %>%
-  arrange(desc(is.referenced.by.count)) %>%
-  slice_head(n = 10) %>%
-  select(title, is.referenced.by.count, author)  # Adjust these column names if needed
-
-# If 'author' is a list, and you want to convert it to a comma-separated string
-top_papers$author <- sapply(top_papers$author, function(x) paste(x, collapse = ", "))
-
-print(top_papers)
-### Distribution of reference counts --------
-png("hist_ref.png", width=800, height=600)
-par(mar=c(4, 4, 2, 2))
-hist(df_journalarticles$is.referenced.by.count, breaks=50, main="Histogram of Reference Counts",
-     xlab="Number of References", ylab="Frequency", col="lightblue")
-dev.off()
-
 #### Filter Data Frame ------
 #rows where reference counts are 250 or less
 filtered_data <- df_journal[df_journal$is.referenced.by.count <= 250, ]
@@ -113,4 +94,23 @@ ggplot(publisher_summary, aes(x = publisher, y = paper_count, fill = publisher))
        y = "Number of Papers") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))  # Rotate the x-axis labels for better readability
+dev.off()
+
+### Top 10 Most Referenced Articles ------
+
+# Dataframe has columns named 'title', 'is.referenced.by.count', and 'author'
+top_papers <- df_journal %>%
+  arrange(desc(is.referenced.by.count)) %>%
+  slice_head(n = 10) %>%
+  select(title, is.referenced.by.count, author)  # Adjust these column names if needed
+
+# If 'author' is a list, and you want to convert it to a comma-separated string
+top_papers$author <- sapply(top_papers$author, function(x) paste(x, collapse = ", "))
+
+print(top_papers)
+### Distribution of reference counts --------
+png("hist_ref.png", width=800, height=600)
+par(mar=c(4, 4, 2, 2))
+hist(df_journalarticles$is.referenced.by.count, breaks=50, main="Histogram of Reference Counts",
+     xlab="Number of References", ylab="Frequency", col="lightblue")
 dev.off()
