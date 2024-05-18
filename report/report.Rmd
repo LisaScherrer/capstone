@@ -1,6 +1,7 @@
 ---
 title: "Report"
 output: html_document
+        pdf_document
 date: "2024-05-13"
 ---
 
@@ -26,7 +27,7 @@ In the following chapter *2 Hypothesis* the assumptions about this purpose I ret
 
 ## 2 Hypotheses
 
-The parameter for a successful article and dependent variable is the amount of references. The university is a young institution not having published studies with "cult status", the first Hypothesis (H1) is that there are very few highly cited articles. However, these articles can gain acclaim through discussing current topics, therefore recent publications are more popular (H2). The language of the article also plays a role due to the increasing importance of English, that is why there are more English publications (H3). Lastly, articles that are of an interdisciplinary nature are relevant to more research fields and yield better results and regardless of the few study programms offered the publishers are diverse (H4).
+The parameter for a successful article and dependent variable is the amount of references. The university is a young institution not having published studies with "cult status", the first Hypothesis (H1) is that there are very few highly cited articles. However, these articles can gain acclaim through discussing current topics, therefore recent publications are more popular (H2). The language of the article also plays a role due to the increasing importance of English, that is why English publications are cited more often than other papers (H3) and the share of English publications has increased (H4). Lastly, articles that are of an interdisciplinary nature are relevant to more research fields and yield better results and regardless of the few study programms offered the publishers are diverse (H5).
 
 ## 3 Retrieving Data
 
@@ -46,31 +47,49 @@ Since the data had to be requested multiple times these seperate responses were 
 
 ### 4.1 Reference Count
 
-*Figure 1* and *Figure 2* represents the distribution of
+*Figure 1* and *Figure 2* represent the distribution of the reference counts of the articles, while all articles with reference count NA were removed. It is apparent that there is a strong tendency for articles to have very few citations as previously hypothesised (H1).
 
-![Figure 1](images/hist_ref250.png)
+![Figure 1](images/hist_ref.png)
 
-![](images/hist_ref.png)
+As visible in *Figure 2* the papers quoted 0-5 exceed 5000 and represent more than half of the sample.
 
-### 4.2 Time and 
+![Figure 2](images/hist_ref250.png)
 
--   What is the connection between time and reference count?
+### 4.2 Timeline
 
-![](images/scatter_ref_year.png)
+To analyse a possible corralation between the year the articles were written and their citation count these two variables were plotted against each other in *Figure 3.* In the scatter plot there does not seem to be a visible connection between the two variables, therefore not fulfilling the requirements for further analysis with a regression model and disproving H2.
 
--   What role does the language of the articles play in the amount of references?
+![Figure 3](images/scatter_ref_year.png)
 
-    ![](images/ref_lang_time-01.png)
+### 4.3 Language
 
-    -   Which are the most common publishers?
+![](images/ref_lang.png)
 
-![](images/hist_publisher.png)
+In *Figure 4* we can see that the share of German publications has decreased. While all publications from 2002 of the sample were in German a significant amount of publications were written in English in the last decade. Despite the political importance of French the amount of French articles are significantly lower than the English publications, supporting H4.
 
-To round off the analysis the top ten articles should be compared to these findings to see if they are in line with the observed trends.
+![Figure 4](images/ref_langu_time.png)
+
+### 4.4 Publisher
+
+According to H5 there the articles should be published in a wide array of research platforms. In order to test this hypothesis a bar chart was created showcasing the 10 most common publishers. In *Figure 5* the variety of publishers focusing on a host of different fields including *Trans Tech Publications, Ltd.,* the *American Society for Microbiology* and *Horgefe Publishing Group*. This is in line with H4.
+
+![Figure 5](images/hist_publisher.png)
+
+### 4.5 Top 10
+
+In order to round off the analysis the most cited papers are compared the previous findings to see if they are in line with the observed trends.
 
 ```{r}
+load("data/df_journal.Rda")
+
+top_papers <- df_journal %>%
+  arrange(desc(is.referenced.by.count)) %>%
+  slice_head(n = 10) %>%
+  select(title, is.referenced.by.count, author)  # Adjust these column names if needed
+
+top_papers$author <- sapply(top_papers$author, function(x) paste(x, collapse = ", "))
+
 print(top_papers)
-View(top_papers)
 ```
 
 ## 5 Conclusion

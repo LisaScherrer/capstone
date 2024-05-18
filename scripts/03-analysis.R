@@ -10,33 +10,40 @@ load("data/df_journal.Rda")
 ## Reference Count -----
 df_journal$is.referenced.by.count[order(df_journal$is.referenced.by.count, decreasing = TRUE)]
 
-#### Filter Data Frame ------
+### Filter Data Frame ------
 #rows where reference counts are 250 or less
 filtered_data <- df_journal[df_journal$is.referenced.by.count <= 250, ]
 
-#### Histogramm ----
+### Distribution of reference counts --------
+#### All articles ----------
+png("hist_ref.png", width=800, height=600)
+par(mar=c(4, 4, 2, 2))
+hist(df_journalarticles$is.referenced.by.count, breaks=50, main="Histogram of Reference Counts",
+     xlab="Number of References", ylab="Frequency", col="lightblue")
+dev.off()
+
+#### Articles with reference counts 250 or less -----------
 png("hist_ref250.png", width=800, height=600)
 par(mar=c(4, 4, 2, 2))
 hist(filtered_data$is.referenced.by.count, breaks=50, main="Histogram of Reference Counts (250 or less)",
      xlab="Number of References", ylab="Frequency", col="lightblue")
 dev.off()
 
-## Relation of citations and other variables ---
-### Citation year vs. citation count------
-# Create a new column with the first four characters of the original_column
+## Timeline ------
+### New column for Year created -----
 df_journal$year_created <- substr(df_journal$created.date.time, start = 1, stop = 4)
 View(df_journal$year_created)
 
-# Creating a scatter plot
+### Scatter plot -----
 png("scatter_ref_year.png", width=800, height=600)
 plot(df_journal$year_created, df_journal$is.referenced.by.count, 
      main="Year created vs. Citation Count", xlab="Year Created", ylab="Citation Count", col="blue")
 dev.off()
 
-### Language and Citations ------
+### Language ------
 print(df_journal$language)
 
-#boxplot
+# Boxplot showing distribution of citations by language
 df_na_lang_rem <- df_journal[!is.na(df_journal$language), ]  # Remove rows with NA values in the language column
 png("ref_lang.png", width=800, height=600)
 ggplot(df_na_lang_rem, aes(x=language, y=is.referenced.by.count, fill=language)) +
@@ -48,15 +55,14 @@ dev.off()
 # stacked bar plot showing distribution of langugages over time
 
 # Assuming you have a 'year' and 'language' column in your df_na_lang_rem
-# Filter data for the last ten years
 journal_count <- df_na_lang_rem %>%
   group_by(year_created, language) %>%
   summarise(count = n(), .groups = 'drop')  # Count the number of papers per language per year
 
-png("ref_lang_time.png", width=800, height=600)
+png("ref_langu_time.png", width=800, height=600)
 ggplot(journal_count, aes(x = as.factor(year_created), y = count, fill = language)) +
   geom_bar(stat = "identity") +
-  labs(title = "Spread of Published Languages Over the Last Ten Years",
+  labs(title = "Spread of Published Languages",
        x = "Year",
        y = "Number of Publications",
        fill = "Language") +
@@ -108,9 +114,3 @@ top_papers <- df_journal %>%
 top_papers$author <- sapply(top_papers$author, function(x) paste(x, collapse = ", "))
 
 print(top_papers)
-### Distribution of reference counts --------
-png("hist_ref.png", width=800, height=600)
-par(mar=c(4, 4, 2, 2))
-hist(df_journalarticles$is.referenced.by.count, breaks=50, main="Histogram of Reference Counts",
-     xlab="Number of References", ylab="Frequency", col="lightblue")
-dev.off()
