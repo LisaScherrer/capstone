@@ -3,7 +3,7 @@ library(httr)
 library(jsonlite)
 library(dplyr)
 
-# Retrieving Crossref Data ------------
+# Retrieving Data ------------
 
 ## Creating an Empty List -----------
 requests1 <- list()

@@ -93,4 +93,4 @@ In summary, this paper shows how different types of metadata are connected to hi
 
 ### 5.2 Limitations
 
-This report was insightful in many aspects suggesting that most of our Hypotheses could be correct. Nevertheless, this analysis is far from being a representative
+This report was insightful in many aspects suggesting that most of our Hypotheses could be correct. Nevertheless, the sample is quite small with 10 000 journal articles and might not be representative of the actual trends concerning the metadata of these publications. Additionally, there need to be more investigations made on each of the Hypotheses to confirm or suggest a strong link between the variables.
