@@ -23,7 +23,7 @@ Data Mining For Political and Social Science in R
 
 The of this project are journal articles that are by authors affiliated with the University of Lucerne. In order to answer my research question on the connection between different meta data and the amount of citations of these journal articles and ultimately to answer what makes a successful paper.
 
-In the following chapter *2 Hypothesis* the assumptions about this purpose I retrieved the meta data of the specified journal articles through a REST API which is described in more detail in chapter *3 Retrieving Data.* Next the raw data was transformed and displayed through a list of the top 10 most published articles as well as number of visualisations, including a stacked plot and a scatter plot, connecting the meta data variables and the amount of citations. These two steps are detailed in chapter *4 Visualisation and Analysis*. Finally, in chapter *5 Conclusion* the findings and limitations of this research project are summarised.
+In the following chapter *2 Hypothesis* the assumptions about this purpose I retrieved the meta data of the specified journal articles through a REST API which is described in more detail in chapter *3 Retrieving Data.* Next the raw data was transformed and displayed through a number of visualisations, including a stacked plot and a scatter plot, connecting the meta data variables and the amount of citations. These two steps are detailed in chapter *4 Analysis and Visualisation*. Finally, in chapter *5 Conclusion* the findings and limitations of this research project are summarised.
 
 ## 2 Hypotheses
 
@@ -63,33 +63,34 @@ To analyse a possible corralation between the year the articles were written and
 
 ### 4.3 Language
 
-![](images/ref_lang.png)
+Regarding the language of publication there is a clear trend in terms of citation count. As previously hypothesised the articles written in English are cited significantly more frequently than other languages as depicted in *Figure 4* and therefore supports H3.
 
-In *Figure 4* we can see that the share of German publications has decreased. While all publications from 2002 of the sample were in German a significant amount of publications were written in English in the last decade. Despite the political importance of French the amount of French articles are significantly lower than the English publications, supporting H4.
+![Figure 4](images/ref_lang.png)
 
-![Figure 4](images/ref_langu_time.png)
+In *Figure 5* we can see that there is no clear development regarding the language of publication. However, there does seem to be a slight decrease of the share of articles published in German compared to the English articles which have always significantly outweighed the ones in other languages. Despite the political importance of French and increase in publications since 2018 the amount of French articles are still significantly lower than the German and English publications.
+
+![Figure 5](images/ref_langu_time.png)
 
 ### 4.4 Publisher
 
 According to H5 there the articles should be published in a wide array of research platforms. In order to test this hypothesis a bar chart was created showcasing the 10 most common publishers. In *Figure 5* the variety of publishers focusing on a host of different fields including *Trans Tech Publications, Ltd.,* the *American Society for Microbiology* and *Horgefe Publishing Group*. This is in line with H4.
 
-![Figure 5](images/hist_publisher.png)
-
-### 4.5 Top 10
-
-In order to round off the analysis the most cited papers are compared the previous findings to see if they are in line with the observed trends.
-
-```{r}
-load("data/df_journal.Rda")
-
-top_papers <- df_journal %>%
-  arrange(desc(is.referenced.by.count)) %>%
-  slice_head(n = 10) %>%
-  select(title, is.referenced.by.count, author)  # Adjust these column names if needed
-
-top_papers$author <- sapply(top_papers$author, function(x) paste(x, collapse = ", "))
-
-print(top_papers)
-```
+![Figure 6](images/hist_publisher.png)
 
 ## 5 Conclusion
+
+### 5.1 Findings
+
+In summary, this paper shows how different types of metadata are connected to highly cited, and therefore successful, journal articles by authors affiliated with the University of Lucerne. In the analysis 4 Hypotheses were put to the test with the following results:
+
+-   H1: Most articles of the university of Lucerne are very seldom cited. As speculated this could be due to the only recent founding of the institution.
+
+-   H2: There is no clear trend towards publications being cited more often in recent years, which disproves our second Hypothesis.
+
+-   H3: English publications are more successful and significantly more often cited than papers published in other languages, which supports H3.
+
+-   H4: The share of English publications seems to have increased indicating that H4 might be correct. However, this correlation is not very strong and needs to be investigated further.
+
+### 5.2 Limitations
+
+This report was insightful in many aspects suggesting that most of our Hypotheses could be correct. Nevertheless, this analysis is far from being a representative

@@ -101,16 +101,3 @@ ggplot(publisher_summary, aes(x = publisher, y = paper_count, fill = publisher))
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))  # Rotate the x-axis labels for better readability
 dev.off()
-
-### Top 10 Most Referenced Articles ------
-
-# Dataframe has columns named 'title', 'is.referenced.by.count', and 'author'
-top_papers <- df_journal %>%
-  arrange(desc(is.referenced.by.count)) %>%
-  slice_head(n = 10) %>%
-  select(title, is.referenced.by.count, author)  # Adjust these column names if needed
-
-# If 'author' is a list, and you want to convert it to a comma-separated string
-top_papers$author <- sapply(top_papers$author, function(x) paste(x, collapse = ", "))
-
-print(top_papers)
